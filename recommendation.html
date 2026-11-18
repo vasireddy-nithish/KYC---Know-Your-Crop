@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crop Advisor — Fieldnote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div class="announcement">
+      A MORE THOUGHTFUL WAY TO PLAN YOUR NEXT HARVEST <b>✳</b>
+    </div>
+
+    <header>
+      <a class="brand" href="index.html">
+        <i>f.</i>
+        <span>
+          fieldnote
+          <small>AGRICULTURE, WITH INSIGHT</small>
+        </span>
+      </a>
+
+      <button class="menu">☰</button>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="recommendation.html">Crop advisor</a>
+        <a href="insights.html">Field insights</a>
+        <a href="market.html">Market watch</a>
+        <a href="approach.html">Our approach</a>
+      </nav>
+
+      <a class="navbtn" href="recommendation.html">Plan a crop ↗</a>
+    </header>
+
+    <main>
+      <section class="pagehead">
+        <label>— YOUR LAND, UNDERSTOOD</label>
+        <h1>Start with the<br><em>soil beneath you.</em></h1>
+        <p>Enter your field measurements to discover a crop recommendation powered by our trained machine learning model.</p>
+      </section>
+
+      <section class="section two">
+        <form id="cropForm" class="panel">
+          <label>FIELD MEASUREMENTS</label>
+          <h2>Tell us about your soil.</h2>
+
+          <div class="fields">
+            <label>
+              Nitrogen
+              <small>N · kg/ha</small>
+              <input name="N" type="number" value="90" step="0.1" required>
+            </label>
+
+            <label>
+              Phosphorus
+              <small>P · kg/ha</small>
+              <input name="P" type="number" value="42" step="0.1" required>
+            </label>
+
+            <label>
+              Potassium
+              <small>K · kg/ha</small>
+              <input name="K" type="number" value="43" step="0.1" required>
+            </label>
+
+            <label>
+              Temperature
+              <small>°C</small>
+              <input name="temperature" type="number" value="25" step="0.1" required>
+            </label>
+
+            <label>
+              Humidity
+              <small>%</small>
+              <input name="humidity" type="number" value="80" step="0.1" required>
+            </label>
+
+            <label>
+              Soil pH
+              <small>pH scale</small>
+              <input name="ph" type="number" value="6.5" step="0.1" required>
+            </label>
+
+            <label>
+              Rainfall
+              <small>mm · match training definition</small>
+              <input name="rainfall" type="number" value="200" step="0.1" required>
+            </label>
+          </div>
+
+          <p class="hint">ⓘ Use recent soil-test values. Weather measurements must match the period and units used during model training.</p>
+
+          <button class="btn" id="predictBtn" type="submit">Explore suitable crops ↗</button>
+
+          <p id="errorMessage" class="hint" hidden></p>
+        </form>
+
+        <aside class="asidephoto">
+          <div>
+            <label>A NOTE ON THE RESULT</label>
+            <h2>Insight is a<br><em>starting point.</em></h2>
+            <p>Crop suitability also depends on season, irrigation, local varieties, pests and farm economics. Validate recommendations with local agricultural expertise.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="result" hidden>
+        <label>YOUR FIELDNOTE SUMMARY</label>
+        <h2>A crop to <em>explore.</em></h2>
+
+        <div class="prediction-layout">
+          <div class="result crop-result">
+            <div class="crop-image-container">
+              <img id="cropImage" src="images/crops/rice.jpg" alt="Recommended crop">
+            </div>
+
+            <div class="crop-details">
+              <label>MODEL RECOMMENDATION</label>
+              <h2 id="cropName">Your crop will appear here</h2>
+              <p id="cropMessage">Your recommendation is based on your field measurements.</p>
+              <b id="predictionStatus">RANDOM FOREST MODEL</b>
+            </div>
+          </div>
+
+          <div class="prediction-insights">
+            <div class="insight-card probability-card">
+              <label>PREDICTION PROBABILITY</label>
+              <div class="probability-value">
+                <strong id="predictionProbability">--%</strong>
+                <span>Model confidence score</span>
+              </div>
+              <div class="probability-track">
+                <div id="probabilityBar"></div>
+              </div>
+              <p>This represents the model's estimated probability for its recommended crop, not a guarantee of harvest success.</p>
+            </div>
+
+            <div class="insight-card">
+              <label>OTHER MODEL PREDICTIONS</label>
+              <h3>Top 3 crop matches</h3>
+              <div id="topPredictions"></div>
+            </div>
+
+            <div class="insight-card">
+              <label>YOUR FIELD DATA</label>
+              <h3>Measurements analyzed</h3>
+              <div class="measurement-grid">
+                <div>
+                  <span>Nitrogen</span>
+                  <strong id="usedN">--</strong>
+                </div>
+                <div>
+                  <span>Phosphorus</span>
+                  <strong id="usedP">--</strong>
+                </div>
+                <div>
+                  <span>Potassium</span>
+                  <strong id="usedK">--</strong>
+                </div>
+                <div>
+                  <span>Temperature</span>
+                  <strong id="usedTemperature">--</strong>
+                </div>
+                <div>
+                  <span>Humidity</span>
+                  <strong id="usedHumidity">--</strong>
+                </div>
+                <div>
+                  <span>Soil pH</span>
+                  <strong id="usedPh">--</strong>
+                </div>
+                <div>
+                  <span>Rainfall</span>
+                  <strong id="usedRainfall">--</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="hint">This recommendation is generated by a machine learning model. Consider local agricultural conditions before making planting decisions.</p>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand" href="index.html">
+        <i>f.</i>
+        <span>
+          fieldnote
+          <small>AGRICULTURE, WITH INSIGHT</small>
+        </span>
+      </a>
+      <p>Thoughtful tools for better growing decisions.</p>
+      <small>DEMO EXPERIENCE · 2026</small>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
